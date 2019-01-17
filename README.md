@@ -20,8 +20,9 @@ fix_concatenated_fastqs -i <path_to_folder_of_fastqs>
 porechop --check_reads 1000 -i raw_reads.fastq -o adapter_trimmed.fastq
 ```
 # Optional: filter reads based on length and quality
+```
 filtlong --min_mean_q 80 --min_length 2000 <adapter_trimmed.fastq> > filtered.fq
-
+```
 # Examine reads w/ NanoPlot
 ```
 NanoPlot --fastq <nanopore.fastq> --threads 24 -o <output-dir>
