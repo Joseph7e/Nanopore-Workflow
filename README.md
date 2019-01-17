@@ -18,20 +18,21 @@ pip3 install ont-fastq-deconcatenate
 fix_concatenated_fastqs -i <path_to_folder_of_fastqs>
 ```
 
-# Trim adapters
+# Trim adapters w/ porechop
 The porechop "check_reads" option removes the need to specify adapters. It will automatically check and detemrine which ones to remove.
 ```
 porechop --check_reads 1000 -i raw_reads.fastq -o adapter_trimmed.fastq
 ```
 
-# Optional: filter reads based on length and quality
-I usually run this on the raw reads and after any adapter/quality trimming. Run time ~ 2 hrs per 10 GB
+# Filter reads based on length and quality w/ filtlong
+This step is optional. I did not run it through my first attempts. 
 ```
 filtlong --min_mean_q 80 --min_length 2000 <adapter_trimmed.fastq> > filtered.fq
 ```
 
 # Examine reads w/ NanoPlot
 https://github.com/wdecoster/NanoPlot
+I usually run this on the raw reads and after any adapter/quality trimming. Run time ~ 2 hrs per 10 GB
 ```
 NanoPlot --fastq <nanopore.fastq> --threads 24 -o <output-dir>
 ```
