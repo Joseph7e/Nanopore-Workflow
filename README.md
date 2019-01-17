@@ -2,7 +2,7 @@
 Various commands for handling Nanopore data.
 
 ![]https://nanoporetech.com/sites/default/files/s3/sequencing-animated.gif
-![alt text](http://www.pmlive.com/__data/assets/image/0006/1256190/oxford-nanopore-technologies_logo.jpg)
+![alt text](sequencing-animated.gif)
 # Repair corrupted read files produced with guppy
 ### Joes Way
 ```
