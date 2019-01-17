@@ -1,7 +1,5 @@
 # Nanopore Workflows
 Various commands for handling Nanopore data.
-
-![]https://nanoporetech.com/sites/default/files/s3/sequencing-animated.gif
 ![alt text](sequencing-animated.gif)
 # Repair corrupted read files produced with guppy
 ### Joes Way
