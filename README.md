@@ -1,6 +1,6 @@
 # Repair corrupted read files prodiced with guppy
 ### Joes Way
-'''
+'''shell
 cd <fastq_directory>
 ls *.fastq | sort -t'_' -k2 -n | xargs cat - > ../raw_reads.fastq
 /mnt/lustre/hcgs/joseph7e/scripts/nanopore_fix_fastq.py <fastq_from_above> > <fixed.fastq>
