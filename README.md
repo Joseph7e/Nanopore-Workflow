@@ -1,7 +1,7 @@
 # Nanopore Workflows
 Various commands for handling Nanopore data.
 
-![alt text](https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjq0-z3n_XfAhWrm-AKHX_mAW0QjRx6BAgBEAU&url=http%3A%2F%2Fnanoporetech.com%2Fapplications%2Fdna-nanopore-sequencing&psig=AOvVaw0QlUk4f6I6ft8nKGjQQlfA&ust=1547829385614962)
+![alt text](http://cdn.frontlinegenomics.com/wp-content/uploads/DDy8AMQXYAA72ji.jpg)
 
 
 # Repair corrupted read files produced with guppy
