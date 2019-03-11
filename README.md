@@ -52,6 +52,14 @@ sbatch /mnt/lustre/hcgs/joseph7e/scripts/GENOME_ASSEMBLY/hybrid_assembly_spades.
 ```
 ### Hybrid Assembly w/ Masurca
 
+
+
+### Assembly w/ Canu
+Reads > 1kb an genome size of 130MB
+
+De Bruijn graph contigs were generated with Platanus
+
+
 ## Scaffolding w/ LINKS
 Note that this process requires a ton of memory. Maybe use a high memory node or used a reduced set of reads.
 ```
