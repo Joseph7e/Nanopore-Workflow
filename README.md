@@ -4,10 +4,16 @@ Various commands for handling Nanopore data.
 
 ## Basecalling
 #### Guppy
+
 ```
 guppy_basecaller -i <inputdir> -s <output_dir> --flowcell FLO-MIN106 --kit SQK-LSK109 –fast5_out -r -t 15
 ```
-### Albacore
+
+#### Albacore
+
+```
+
+```
 
 ## Repair corrupted read files produced with guppy
 #### Joes Way
