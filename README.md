@@ -4,7 +4,7 @@ Various commands for handling Nanopore data.
 
 ## Basecalling
 
-Skip this step if the sequencer did the basecalling
+(if needed)
 
 #### Guppy
 
