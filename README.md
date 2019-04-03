@@ -10,9 +10,7 @@ Various commands for handling Nanopore data.
  wget https://www.dropbox.com/s/eml7z2d82n3k8lq/lambda.tar.gz?dl=0 -O lambda.tar.gz
 ```
 
-## Basecalling
-
-(if needed)
+## Basecalling (if needed)
 
 #### Guppy
 
