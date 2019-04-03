@@ -2,6 +2,14 @@
 Various commands for handling Nanopore data.
 ![alt text](sequencing-animated.gif)
 
+## Example Starting Data
+#### nanopore only
+
+##### Lambda
+ ```
+ wget https://www.dropbox.com/s/eml7z2d82n3k8lq/lambda.tar.gz?dl=0 -O lambda.tar.gz
+```
+
 ## Basecalling
 
 (if needed)
