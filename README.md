@@ -3,7 +3,7 @@ Various commands for handling Nanopore data.
 ![alt text](sequencing-animated.gif)
 
 ## Example Starting Data
-#### nanopore only
+### nanopore only
 
 ##### Lambda
  ```
