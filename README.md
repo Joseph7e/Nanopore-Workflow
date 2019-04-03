@@ -10,6 +10,11 @@ Various commands for handling Nanopore data.
  wget https://www.dropbox.com/s/eml7z2d82n3k8lq/lambda.tar.gz?dl=0 -O lambda.tar.gz
 ```
 
+### Nanopore + Illumina
+
+##### Includes various microbes
+https://www.ncbi.nlm.nih.gov/bioproject/PRJNA477342
+
 ## Basecalling (if needed)
 
 #### Guppy
