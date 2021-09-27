@@ -31,8 +31,6 @@ Scaffolding with Nanopore data
  wget https://www.dropbox.com/s/eml7z2d82n3k8lq/lambda.tar.gz?dl=0 -O lambda.tar.gz
 ```
 
-### Nanopore + Illumina
-
 ##### Includes various microbes
 https://www.ncbi.nlm.nih.gov/bioproject/PRJNA477342
 
@@ -40,15 +38,18 @@ https://www.ncbi.nlm.nih.gov/bioproject/PRJNA477342
 
 #### Guppy
 
+Basecalling is typically run automatically on the sequencing instrument. FOr example the GirdIOn will run the Guppy basecaller as soon as the fast5s are produced. Note that the Guppy installation prodices corrrupted fastqs right now, fix that. The minion may use a different one. 
+  
+  
+Manual: https://denbi-nanopore-training-course.readthedocs.io/en/latest/basecalling/basecalling.html
+Alternative Tools: Albacore, DeepNano-blitz, minKNOW, Chiron, Bonito
+Comparison of base callers: https://github.com/rrwick/Basecalling-comparison
+
 ```
+
 guppy_basecaller -i <inputdir> -s <output_dir> --flowcell FLO-MIN106 --kit SQK-LSK109 –fast5_out -r -t 15
 ```
 
-#### Albacore
-
-```
-
-```
 
 ## Repair corrupted read files produced with guppy
 #### Joes Way
