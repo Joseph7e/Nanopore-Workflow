@@ -36,8 +36,6 @@ https://www.ncbi.nlm.nih.gov/bioproject/PRJNA477342
 
 ## Basecalling (if needed)
 
-#### Guppy
-
 Basecalling is typically run automatically on the sequencing instrument. FOr example the GirdIOn will run the Guppy basecaller as soon as the fast5s are produced. Note that the Guppy installation prodices corrrupted fastqs right now, fix that. The minion may use a different one. 
   
   
@@ -46,7 +44,7 @@ Alternative Tools: Albacore, DeepNano-blitz, minKNOW, Chiron, Bonito
 Comparison of base callers: https://github.com/rrwick/Basecalling-comparison
 
 ```
-
+# basecalling with guppy
 guppy_basecaller -i <inputdir> -s <output_dir> --flowcell FLO-MIN106 --kit SQK-LSK109 –fast5_out -r -t 15
 ```
 
