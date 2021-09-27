@@ -2,6 +2,27 @@
 Various commands for handling Nanopore data.
 ![alt text](sequencing-animated.gif)
 
+
+# Table of Contents
+
+Basecalling
+
+Filtering and Visualizing data
+
+Nanopore only
+
+Correction/Polishing of Nanopore assembly with Illumina data
+
+
+Hybrid Assembly
+
+
+Scaffolding with Nanopore data
+
+
+
+
+
 ## Example Starting Data
 ### nanopore only
 
