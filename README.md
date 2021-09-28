@@ -111,6 +111,12 @@ Reads > 1kb an genome size of 130MB
 
 De Bruijn graph contigs were generated with Platanus
 
+```
+canu -d canu-assembly -p filt genomeSize=3.5m -nanopore-raw nanopore-reads.fastq
+
+```
+
+
 
 ## Scaffolding w/ LINKS
 Note that this process requires a ton of memory. Maybe use a high memory node or used a reduced set of reads.
