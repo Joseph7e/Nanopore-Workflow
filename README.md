@@ -5,17 +5,20 @@ Various commands for handling Nanopore data.
 
 # Table of Contents
 * [Overview](https://github.com/Joseph7e/Nanopore-Workflow#Overview)  
-    * [Basecalling](https://github.com/Joseph7e/HCGS-BASH-tutorial) and [INBRE BASH Tutorials](https://geiselmed.dartmouth.edu/nhinbre/bioinformatics-modules/)  
-    * [Assessment and Read Processinga](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)  
+    * [Basecalling](https://github.com/Joseph7e/Nanopore-Workflow#Basecalling)
+    * [Read Processing](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)  
        * [Assessment of data](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-and-filtering-Nanopore-Data)  
        * [Adapter Trimming](https://github.com/Joseph7e/Nanopore-Workflow#Trim-adapters-with-porechop) 
        * [Filter Reads](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-and-filtering-Nanopore-Data)  
-    * [Nanoproe-only Assembly](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)  
-
+    * [Nanopore-only Assembly](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)  
+       * [Canu](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-and-filtering-Nanopore-Data)  
+       * [Miniasm](https://github.com/Joseph7e/Nanopore-Workflow#Trim-adapters-with-porechop) 
+    * [Assembly Polishing](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)
 
 # Overview
 
-How data was produced etc.
+How data was produced etc.  
+We will use Illumina data in some instances throughout this tutorial (hybrid-assembly, polishing, and assessment). You'll want to run adapter trimming on the illumina reads prior to using them in any instance. IN addition, you will need an illumina-only assembly for the quality assessment of the nanopore assemblies. FOllow my main genome assembly tutorial to produce a high quality assembly and to dtermine information such as insert size and estimated genome size.  
 
 ## Example data
  Here we provide some typical test data for nanopore analysis, lambda. Other examples datasets can be found in the SRA, see my other turorials to download this type of data.
@@ -76,19 +79,36 @@ This step is optional. I did not run it through my first attempts.
 filtlong --min_mean_q 80 --min_length 2000 <adapter_trimmed.fastq> > filtered.fq
 ```
 
-### Assessment with Nanoplot
+## Assessment with Nanoplot
 https://github.com/wdecoster/NanoPlot
 I usually run this on the raw reads and after any adapter/quality trimming. Run time ~ 2 hrs per 10 GB
 ```
 NanoPlot --fastq <nanopore.fastq> --threads 24 -o <output-dir>
 ```
-## Nanopore only assembly w/ Miniasm + Minimap
+
+
+# Nanopore only assembly
+
+## Canu
+
+Reads > 1kb an genome size of 130MB
+
+De Bruijn graph contigs were generated with Platanus
+
+```
+canu -d canu-assembly -p filt genomeSize=3.5m -nanopore-raw nanopore-reads.fastq
+
+```
+
+## Miniasm
+
 ```
 mkdir miniasm_assembly
 cd miniasm_assembly
 sbatch ~/nanopore_assemble.sh ../adapter_trimmed_reads.fastq
 ```
-## Hybrid Assembly
+
+# Illumina and Nanopore Hybrid Assembly
 
 ### Hybrid Assembly w/ spades
 https://www.ncbi.nlm.nih.gov/pubmed/26589280
@@ -99,17 +119,28 @@ sbatch /mnt/lustre/hcgs/joseph7e/scripts/GENOME_ASSEMBLY/hybrid_assembly_spades.
 ### Hybrid Assembly w/ Masurca
 
 
+# Genome Assembly Polishing
 
-### Assembly w/ Canu
-Reads > 1kb an genome size of 130MB
+## Pilon
 
-De Bruijn graph contigs were generated with Platanus
+## Racon
+
+Manuscript:  
+Tutoral: https://denbi-nanopore-training-course.readthedocs.io/en/latest/polishing/medaka/racon.html  
+
+Racon polishes a nanopore-only assembly with nanopore read, or illumina data.  
+The medaka documentation advises to do four rounds with racon before polishing with medaka since medaka has been trained with racon polished assemblies. We are only doing one round here.
 
 ```
-canu -d canu-assembly -p filt genomeSize=3.5m -nanopore-raw nanopore-reads.fastq
+# index genome
+bwa index <genome.fasta>
 
+# map ont reads to assembly
+bwa mem -t 24 -x ont2d <genome.fasta> <nanopore_reads.fastq> > mapping-filteredONT.sam
+
+# polish with racon and produce new consensus sequence
+racon -m 8 -x -6 -g -8 -w 500 -t 24 <nanopore_reads.fastq> mapping-filteredONT.sam <genome.fasta> > racon.fasta
 ```
-
 
 
 ## Scaffolding w/ LINKS
@@ -174,15 +205,7 @@ cat pilon/*.fasta > polished_genome.fasta
 Repeat the entire process on the newly polished genome. Then again and agin, until you're happy.
 
 
-## Polishing an assembly with racon
 
-```
-# index genome
-bwa index <genome.fasta>
-
-# map ont reads to assembly
-bwa mem -t 24 -x ont2d <genome.fasta> <nanopore_reads.fastq> > mapping-filteredONT.sam
-```
 
 step 1.) map the reads to the assembly
 
