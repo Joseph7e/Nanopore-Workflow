@@ -4,16 +4,19 @@ Various commands for handling Nanopore data.
 
 
 # Table of Contents
-* [Getting Started](https://github.com/Joseph7e/MDIBL-T3-WGS-Tutorial#general-notes)  
+* [Nanopore Data](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-Nanopore-Data)  
     * [Joe's BASH Tutorials](https://github.com/Joseph7e/HCGS-BASH-tutorial) and [INBRE BASH Tutorials](https://geiselmed.dartmouth.edu/nhinbre/bioinformatics-modules/)
     * [Reproducibility](https://github.com/ToniWestbrook/repeatfs)
     * [Starting Data](https://github.com/Joseph7e/MDIBL-T3-WGS-Tutorial#starting-data) 
+
+# Accessing Nanopore Data
 
 Basecalling
 
 Filtering and Visualizing data
 
 Nanopore only
+
 
 Correction/Polishing of Nanopore assembly with Illumina data
 
@@ -180,5 +183,15 @@ cat pilon/*.fasta > polished_genome.fasta
 Repeat the entire process on the newly polished genome. Then again and agin, until you're happy.
 
 
+## Polishing an assembly with racon
 
+```
+# index genome
+bwa index <genome.fasta>
+
+# map ont reads to assembly
+bwa mem -t 24 -x ont2d <genome.fasta> <nanopore_reads.fastq> > mapping-filteredONT.sam
+```
+
+step 1.) map the reads to the assembly
 
