@@ -121,45 +121,57 @@ sbatch /mnt/lustre/hcgs/joseph7e/scripts/GENOME_ASSEMBLY/hybrid_assembly_spades.
 
 # Genome Assembly Polishing
 
-## Pilon
+There are many routes you can take, and many programs to choose. We will be using three. An initial polishing of a nanopore assembly with annopore reads with racon. Further polishign using annopore reads with makon, and a final polishing of the assembly using illumina reads with pilon. You can do any combination of these tools, for example skip right to pilon. Try them all and compare the results!
 
-## Racon
+## Racon and Medaka
 
 Manuscript:  
 Tutoral: https://denbi-nanopore-training-course.readthedocs.io/en/latest/polishing/medaka/racon.html  
 
-Racon polishes a nanopore-only assembly with nanopore read, or illumina data.  
-The medaka documentation advises to do four rounds with racon before polishing with medaka since medaka has been trained with racon polished assemblies. We are only doing one round here.
+Racon can be used as a polishing tool after the assembly with either Illumina data or data produced by third generation of sequencing. The type of data inputed is automatically detected.  
+  
+Racon takes as input only three files: contigs in FASTA/FASTQ format, reads in FASTA/FASTQ format and overlaps/alignments between the reads and the contigs in MHAP/PAF/SAM format. Output is a set of polished contigs in FASTA format printed to stdout. All input files can be compressed with gzip (which will have impact on parsing time).
+  
+The medaka documentation advises to do four rounds with racon before polishing with medaka, since medaka has been trained with racon polished assemblies. We need to iterate all the steps four times.
 
 ```
+# starting data
+genome=canu-assembly.fasta 
+nanopore_reads=../../filtered_1000_80.fastq
+
 # index genome
-bwa index <genome.fasta>
+bwa index $genome
 
 # map ont reads to assembly
-bwa mem -t 24 -x ont2d <genome.fasta> <nanopore_reads.fastq> > mapping-filteredONT.sam
+bwa mem -t 24 -x ont2d $genome $nanopore_reads > mapping-filteredONT.sam
 
 # polish with racon and produce new consensus sequence
-racon -m 8 -x -6 -g -8 -w 500 -t 24 <nanopore_reads.fastq> mapping-filteredONT.sam <genome.fasta> > racon.fasta
+racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT.sam <genome.fasta> > racon.fasta
+
+# repeat (2)
+bwa index racon.fasta
+bwa mem -t 24 -x ont2d racon.fasta $nanopore_reads > mapping-filteredONT2.sam
+racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT2.sam racon.fasta > racon2.fasta
+
+# repeat (3)
+bwa index racon.fasta
+bwa mem -t 24 -x ont2d racon2.fasta $nanopore_reads > mapping-filteredONT3.sam
+racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT3.sam racon2.fasta > racon3.fasta
+
+# repeat (4)
+bwa index racon.fasta
+bwa mem -t 24 -x ont2d racon3.fasta $nanopore_reads > mapping-filteredONT4.sam
+racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT4.sam racon3.fasta > racon-final.fasta
+
+# clean up all the iterations
 ```
 
-
-## Scaffolding w/ LINKS
-Note that this process requires a ton of memory. Maybe use a high memory node or used a reduced set of reads.
-```
-LINKS -f hybrid_assembly_fixed.fasta  -s <txt_file_with_nanopore_read_paths> -b <output_base>
-```
-```
-sbatch ~/nanopore_LINKS.sh <assembly> <nanopore_reads>
-```
-## Assembly Assessment Scripts
-Quast for contiguity, BUSCO for completness, BWA for quality and correctness.
-```
-quast.py miniasm.fasta
-~/scripts/quality_check__genome_busco.sh <assembly.fasta>
-```
+## Medaka
 
 
-## Assembly/Read polishing w/ pilon
+## Pilon
+Here we will polish an assembly using Illumina reads. You can do this right away, or after the racon/medaka polishing.
+  
 #### Step 1: Map Illumina reads to Assembly/Read FASTA.
 The script below outputs a lot of extra (useful) data. We only need the mapping file.
 ```
@@ -203,6 +215,26 @@ cat pilon/*.fasta > polished_genome.fasta
 
 #### Step 5: Rinse and repeat
 Repeat the entire process on the newly polished genome. Then again and agin, until you're happy.
+
+
+
+
+
+
+## Scaffolding w/ LINKS
+Note that this process requires a ton of memory. Maybe use a high memory node or used a reduced set of reads.
+```
+LINKS -f hybrid_assembly_fixed.fasta  -s <txt_file_with_nanopore_read_paths> -b <output_base>
+```
+```
+sbatch ~/nanopore_LINKS.sh <assembly> <nanopore_reads>
+```
+## Assembly Assessment Scripts
+Quast for contiguity, BUSCO for completness, BWA for quality and correctness.
+```
+quast.py miniasm.fasta
+~/scripts/quality_check__genome_busco.sh <assembly.fasta>
+```
 
 
 
