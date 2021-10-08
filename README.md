@@ -7,9 +7,9 @@ Various commands for handling Nanopore data.
 * [Overview](https://github.com/Joseph7e/Nanopore-Workflow#Overview)  
     * [Basecalling](https://github.com/Joseph7e/Nanopore-Workflow#Basecalling)
     * [Read Processing](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)  
-       * [Assessment of data](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-and-filtering-Nanopore-Data)  
        * [Adapter Trimming](https://github.com/Joseph7e/Nanopore-Workflow#Trim-adapters-with-porechop) 
        * [Filter Reads](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-and-filtering-Nanopore-Data)  
+       * [Assessment of reads](https://github.com/Joseph7e/Nanopore-Workflow#Read-Assessment-with-Nanoplot)  
     * [Nanopore-only Assembly](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)  
        * [Canu](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-and-filtering-Nanopore-Data)  
        * [Miniasm](https://github.com/Joseph7e/Nanopore-Workflow#Trim-adapters-with-porechop) 
@@ -67,7 +67,7 @@ pip3 install ont-fastq-deconcatenate
 fix_concatenated_fastqs -i <path_to_folder_of_fastqs>
 ```
 
-### Trim adapters with porechop
+## Trim adapters with porechop
 The porechop "check_reads" option removes the need to specify adapters. It will automatically check and detemrine which ones to remove.
 ```
 porechop --check_reads 1000 -i raw_reads.fastq -o adapter_trimmed.fastq
@@ -79,7 +79,7 @@ This step is optional. I did not run it through my first attempts.
 filtlong --min_mean_q 80 --min_length 2000 <adapter_trimmed.fastq> > filtered.fq
 ```
 
-## Assessment with Nanoplot
+## Read Assessment with Nanoplot
 https://github.com/wdecoster/NanoPlot
 I usually run this on the raw reads and after any adapter/quality trimming. Run time ~ 2 hrs per 10 GB
 ```
