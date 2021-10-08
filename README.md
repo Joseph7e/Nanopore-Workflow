@@ -4,44 +4,31 @@ Various commands for handling Nanopore data.
 
 
 # Table of Contents
-* [Nanopore Data](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-Nanopore-Data)  
-    * [Joe's BASH Tutorials](https://github.com/Joseph7e/HCGS-BASH-tutorial) and [INBRE BASH Tutorials](https://geiselmed.dartmouth.edu/nhinbre/bioinformatics-modules/)
-    * [Reproducibility](https://github.com/ToniWestbrook/repeatfs)
-    * [Starting Data](https://github.com/Joseph7e/MDIBL-T3-WGS-Tutorial#starting-data) 
-
-# Accessing Nanopore Data
-
-Basecalling
-
-Filtering and Visualizing data
-
-Nanopore only
+* [Overview](https://github.com/Joseph7e/Nanopore-Workflow#Overview)  
+    * [Basecalling](https://github.com/Joseph7e/HCGS-BASH-tutorial) and [INBRE BASH Tutorials](https://geiselmed.dartmouth.edu/nhinbre/bioinformatics-modules/)  
+    * [Assessment and Read Processinga](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)  
+       * [Assessment of data](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-and-filtering-Nanopore-Data)  
+       * [Adapter Trimming](https://github.com/Joseph7e/Nanopore-Workflow#Trim-adapters-with-porechop) 
+       * [Filter Reads](https://github.com/Joseph7e/Nanopore-Workflow#Accessing-and-filtering-Nanopore-Data)  
+    * [Nanoproe-only Assembly](https://github.com/Joseph7e/Nanopore-Workflow#Assessing-and-filtering-Nanopore-Data)  
 
 
-Correction/Polishing of Nanopore assembly with Illumina data
+# Overview
 
+How data was produced etc.
 
-Hybrid Assembly
-
-
-Scaffolding with Nanopore data
-
-
-
-
-
-## Example Starting Data
-### nanopore only
-
-##### Lambda
+## Example data
+ Here we provide some typical test data for nanopore analysis, lambda. Other examples datasets can be found in the SRA, see my other turorials to download this type of data.
+  https://www.ncbi.nlm.nih.gov/bioproject/PRJNA477342
+  
+ 
  ```
+ # download a lambda dataset
  wget https://www.dropbox.com/s/eml7z2d82n3k8lq/lambda.tar.gz?dl=0 -O lambda.tar.gz
 ```
 
-##### Includes various microbes
-https://www.ncbi.nlm.nih.gov/bioproject/PRJNA477342
 
-## Basecalling (if needed)
+## Basecalling
 
 Basecalling is typically run automatically on the sequencing instrument. FOr example the GirdIOn will run the Guppy basecaller as soon as the fast5s are produced. Note that the Guppy installation prodices corrrupted fastqs right now, fix that. The minion may use a different one. 
   
@@ -56,8 +43,12 @@ guppy_basecaller -i <inputdir> -s <output_dir> --flowcell FLO-MIN106 --kit SQK-L
 ```
 
 
-## Repair corrupted read files produced with guppy
-#### Joes Way
+### Repair corrupted read files produced with guppy
+
+
+The fastq files need to be decompressed for both methods. For my custom workflow, the column for the sort program must match up with the order the fastq was produced (the numbers in the filename). Be sure to test that this works properly.
+
+#### Joes' custom method.
 ```
 cd <fastq_directory>
 ls *.fastq | sort -t'_' -k2 -n | xargs cat - > ../raw_reads.fastq
@@ -73,19 +64,19 @@ pip3 install ont-fastq-deconcatenate
 fix_concatenated_fastqs -i <path_to_folder_of_fastqs>
 ```
 
-## Trim adapters w/ porechop
+### Trim adapters with porechop
 The porechop "check_reads" option removes the need to specify adapters. It will automatically check and detemrine which ones to remove.
 ```
 porechop --check_reads 1000 -i raw_reads.fastq -o adapter_trimmed.fastq
 ```
 
-## Filter reads based on length and quality w/ filtlong
+## Filter reads with filtlong
 This step is optional. I did not run it through my first attempts. 
 ```
 filtlong --min_mean_q 80 --min_length 2000 <adapter_trimmed.fastq> > filtered.fq
 ```
 
-## Examine reads w/ NanoPlot
+### Assessment with Nanoplot
 https://github.com/wdecoster/NanoPlot
 I usually run this on the raw reads and after any adapter/quality trimming. Run time ~ 2 hrs per 10 GB
 ```
