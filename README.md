@@ -151,17 +151,17 @@ racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT.sam <gen
 # repeat (2)
 bwa index racon.fasta
 bwa mem -t 24 -x ont2d racon.fasta $nanopore_reads > mapping-filteredONT2.sam
-racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT2.sam racon.fasta > racon2.fasta
+racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT2.sam racon.fasta > racon_round2.fasta
 
 # repeat (3)
 bwa index racon.fasta
 bwa mem -t 24 -x ont2d racon2.fasta $nanopore_reads > mapping-filteredONT3.sam
-racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT3.sam racon2.fasta > racon3.fasta
+racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT3.sam racon2.fasta > racon_round3.fasta
 
 # repeat (4)
 bwa index racon.fasta
 bwa mem -t 24 -x ont2d racon3.fasta $nanopore_reads > mapping-filteredONT4.sam
-racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT4.sam racon3.fasta > racon-final.fasta
+racon -m 8 -x -6 -g -8 -w 500 -t 24 $nanopore_reads mapping-filteredONT4.sam racon3.fasta > racon-round4.fasta
 
 # clean up all the iterations
 ```
