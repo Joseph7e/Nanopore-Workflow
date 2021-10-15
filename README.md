@@ -82,6 +82,8 @@ filtlong --min_mean_q 80 --min_length 2000 <adapter_trimmed.fastq> > filtered.fq
 ## Read Assessment with Nanoplot
 https://github.com/wdecoster/NanoPlot
 I usually run this on the raw reads and after any adapter/quality trimming. Run time ~ 2 hrs per 10 GB
+
+
 ```
 NanoPlot --fastq <nanopore.fastq> --threads 24 -o <output-dir>
 ```
@@ -122,6 +124,13 @@ sbatch /mnt/lustre/hcgs/joseph7e/scripts/GENOME_ASSEMBLY/hybrid_assembly_spades.
 # Genome Assembly Polishing
 
 There are many routes you can take, and many programs to choose. We will be using three. An initial polishing of a nanopore assembly with annopore reads with racon. Further polishign using annopore reads with makon, and a final polishing of the assembly using illumina reads with pilon. You can do any combination of these tools, for example skip right to pilon. Try them all and compare the results!
+
+
+Racon
+Minpolish
+nanopolish
+nextpolish
+pilon
 
 ## Racon and Medaka
 
