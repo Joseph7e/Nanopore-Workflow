@@ -30,6 +30,8 @@ We will use Illumina data in some instances throughout this tutorial (hybrid-ass
  wget https://www.dropbox.com/s/eml7z2d82n3k8lq/lambda.tar.gz?dl=0 -O lambda.tar.gz
 ```
 
+# Read processing
+![read processing flowchart for nanopore and illumina data](read_processing_workflow.png)
 
 ## Basecalling
 
