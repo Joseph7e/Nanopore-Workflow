@@ -138,7 +138,7 @@ nanopolish
 nextpolish
 pilon
 
-![Pipeline for genome assembly assessment, polishing, and merging](assessment_workflow.png)
+![Pipeline for genome assembly assessment, polishing, and merging](polishing_merging_assessment_workflow.png)
 
 ## Racon and Medaka
 
