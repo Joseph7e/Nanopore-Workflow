@@ -18,7 +18,17 @@ Various commands for handling Nanopore data.
 # Overview
 
 How data was produced etc.  
-We will use Illumina data in some instances throughout this tutorial (hybrid-assembly, polishing, and assessment). You'll want to run adapter trimming on the illumina reads prior to using them in any instance. IN addition, you will need an illumina-only assembly for the quality assessment of the nanopore assemblies. FOllow my main genome assembly tutorial to produce a high quality assembly and to dtermine information such as insert size and estimated genome size.  
+We will use Illumina data in some instances throughout this tutorial (hybrid-assembly, polishing, and assessment). You'll want to run adapter trimming on the illumina reads prior to using them in any instance. IN addition, you will need an illumina-only assembly for the quality assessment of the nanopore assemblies. FOllow my main genome assembly tutorial to produce a high quality assembly and to determine information such as insert size and estimated genome size.  
+
+## Sample Preperation and Sequencing
+
+Recommended/standardized workflow - 
+  
+alternative methods
+  
+multiplexing 24 max.
+
+
 
 ## Example data
  Here we provide some typical test data for nanopore analysis, lambda. Other examples datasets can be found in the SRA, see my other turorials to download this type of data.
