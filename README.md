@@ -90,6 +90,10 @@ I usually run this on the raw reads and after any adapter/quality trimming. Run 
 NanoPlot --fastq <nanopore.fastq> --threads 24 -o <output-dir>
 ```
 
+# Assemblies overview
+
+![Assembly methodology for microbial genomes with Nanopore and/or Illumina data as a base](assemblies_workflow.png)
+
 
 # Nanopore only assembly
 
